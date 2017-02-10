@@ -1,0 +1,171 @@
+create database cookbook;
+
+USE cookbook;
+
+create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,  name VARCHAR(25), description TEXT, vegan BOOLEAN DEFAULT NULL, vegeterian BOOLEAN DEFAULT NULL, with_meat BOOLEAN DEFAULT NULL, breakfast BOOLEAN DEFAULT NULL, lunch BOOLEAN DEFAULT NULL, dinner BOOLEAN DEFAULT NULL);
+
+create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50));
+
+create table Measure (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(30));
+
+create table RecipeIngredient (recipe_id INT NOT NULL,
+	ingredient_id0 INT, 
+	ingredient_id1 INT, 
+	ingredient_id2 INT,
+	ingredient_id3 INT,
+	ingredient_id4 INT,
+	measure_id0 INT,
+	measure_id1 INT,
+	measure_id2 INT,
+	measure_id3 INT,
+	measure_id4 INT,
+	CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES Recipe(id), 
+	CONSTRAINT fk_ingredient0 FOREIGN KEY(ingredient_id0) REFERENCES Ingredient(id), 
+	CONSTRAINT fk_ingredient1 FOREIGN KEY(ingredient_id1) REFERENCES Ingredient(id),
+	CONSTRAINT fk_ingredient2 FOREIGN KEY(ingredient_id2) REFERENCES Ingredient(id),
+	CONSTRAINT fk_ingredient3 FOREIGN KEY(ingredient_id3) REFERENCES Ingredient(id),
+	CONSTRAINT fk_ingredient4 FOREIGN KEY(ingredient_id4) REFERENCES Ingredient(id),
+	CONSTRAINT fk_measure0 FOREIGN KEY(measure_id0) REFERENCES Measure(id), 
+	CONSTRAINT fk_measure1 FOREIGN KEY(measure_id1) REFERENCES Measure(id), 
+	CONSTRAINT fk_measure2 FOREIGN KEY(measure_id2) REFERENCES Measure(id), 
+	CONSTRAINT fk_measure3 FOREIGN KEY(measure_id3) REFERENCES Measure(id), 
+	CONSTRAINT fk_measure4 FOREIGN KEY(measure_id4) REFERENCES Measure(id),); 
+
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_cookbook |
++--------------------+
+| Ingredient         |
+| Measure            |
+| Recipe             |
+| RecipeIngredient   |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> SHOW COLUMNS FROM Ingredient;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+
+mysql> SELECT * FROM Ingredient;
++----+-----------------+
+| id | name            |
++----+-----------------+
+|  1 | egg             |
+|  2 | salt            |
+|  3 | sugar           |
+|  4 | chocolate       |
+|  5 | vanilla extract |
+|  6 | flour           |
+|  7 | carrot          |
+|  8 | spinach         |
+|  9 | potato          |
+| 10 | broccoli        |
+| 11 | tomato          |
+| 12 | onion           |
+| 13 | lettuce         |
+| 14 | cucumber        |
+| 15 | celery          |
+| 16 | kale            |
+| 17 | eggplant        |
+| 18 | brussels sprout |
+| 19 | mushrooms       |
+| 20 | chicken         |
+| 21 | sunflower seeds |
+| 22 | water           |
+| 23 | cinnamon        |
+| 24 | cranberries     |
+| 25 | walnuts         |
+| 26 | milk            |
+| 27 | oats            |
+| 28 | flaxseeds       |
+| 29 | lamb chops      |
+| 30 | lemon juice     |
+| 31 | black pepper    |
+| 32 | cloves garlic   |
+| 33 | pepper          |
+| 34 | Sweet Potato    |
++----+-----------------+
+
+mysql> SHOW COLUMNS FROM Measure;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(30) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+
+mysql> SELECT * FROM Measure;
++----+------------+
+| id | name       |
++----+------------+
+|  1 | CUP        |
+|  2 | 1/2 CUP    |
+|  3 | 1/4 CUP    |
+|  4 | TEASPOON   |
+|  5 | TABLESPOON |
++----+------------+
+
+mysql> SHOW COLUMNS FROM Recipe;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| id          | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(25) | YES  |     | NULL    |                |
+| description | text        | YES  |     | NULL    |                |
+| vegan       | tinyint(1)  | YES  |     | NULL    |                |
+| vegeterian  | tinyint(1)  | YES  |     | NULL    |                |
+| with_meat   | tinyint(1)  | YES  |     | NULL    |                |
+| breakfast   | tinyint(1)  | YES  |     | NULL    |                |
+| lunch       | tinyint(1)  | YES  |     | NULL    |                |
+| dinner      | tinyint(1)  | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+
+mysql> SELECT * FROM Recipe;
++----+--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+------------+-----------+-----------+-------+--------+
+| id | name                     | description                                                                                                                                                          | vegan | vegeterian | with_meat | breakfast | lunch | dinner |
++----+--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+------------+-----------+-----------+-------+--------+
+|  1 | Poached Egg over Spinach | A great way to add extra veggies to many dishes is to add baby spinach right before the end of the cooking time. All you have to do is wait for it to become tender. |     0 |          1 |         0 |         1 |     0 |      0 |
+|  2 | Egg with sunflower seeds | Combining eggs with a green leafy vegetables makes for a great tasty and nutritious breakfast.                                                                       |     0 |          1 |         0 |         1 |     0 |      0 |
+|  3 | Perfect Oatmeal          | A perfect way to start a day of healthy eating.                                                                                                                      |     0 |          1 |         0 |         1 |     0 |      0 |
+|  5 | Rosemary Lamb Chops      | Nothing complements the flavor of lamb better than rosemary.                                                                                                         |     0 |          0 |         1 |         0 |     0 |      1 |
+|  6 | Sweet Potatoes           | Boiled Sweet Potatoes get watery and lose their flavor.                                                                                                              |     0 |          0 |         1 |         0 |     1 |      0 |
++----+--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+------------+-----------+-----------+-------+--------+
+
+mysql> mysql> SHOW COLUM RecipeIngredient;
++----------------+---------+------+-----+---------+-------+
+| Field          | Type    | Null | Key | Default | Extra |
++----------------+---------+------+-----+---------+-------+
+| recipe_id      | int(11) | NO   | MUL | NULL    |       |
+| ingredient_id0 | int(11) | YES  | MUL | NULL    |       |
+| ingredient_id1 | int(11) | YES  | MUL | NULL    |       |
+| ingredient_id2 | int(11) | YES  | MUL | NULL    |       |
+| ingredient_id3 | int(11) | YES  | MUL | NULL    |       |
+| ingredient_id4 | int(11) | YES  | MUL | NULL    |       |
+| measure_id0    | int(11) | YES  | MUL | NULL    |       |
+| measure_id1    | int(11) | YES  | MUL | NULL    |       |
+| measure_id2    | int(11) | YES  | MUL | NULL    |       |
+| measure_id3    | int(11) | YES  | MUL | NULL    |       |
+| measure_id4    | int(11) | YES  | MUL | NULL    |       |
++----------------+---------+------+-----+---------+-------+
+
+mysql> SELECT * FROM RecipeIngredient;
++-----------+----------------+----------------+----------------+----------------+----------------+-------------+-------------+-------------+-------------+-------------+
+| recipe_id | ingredient_id0 | ingredient_id1 | ingredient_id2 | ingredient_id3 | ingredient_id4 | measure_id0 | measure_id1 | measure_id2 | measure_id3 | measure_id4 |
++-----------+----------------+----------------+----------------+----------------+----------------+-------------+-------------+-------------+-------------+-------------+
+|         2 |              1 |              2 |              3 |              4 |           NULL |           1 |           1 |           2 |           3 |           1 |
+|         3 |              5 |              6 |              7 |              8 |           NULL |           2 |           2 |           1 |           1 |           3 |
+|         4 |              9 |             10 |             11 |             12 |           NULL |           3 |           1 |           2 |           3 |           2 |
+|         5 |             13 |             14 |             15 |             16 |             16 |           3 |           2 |           3 |           3 |           1 |
+|         6 |             17 |             18 |             19 |             20 |              1 |           3 |           2 |           3 |           3 |           1 |
+|         7 |             21 |             22 |             23 |              5 |              1 |           3 |           2 |           3 |           3 |           1 |
++-----------+----------------+----------------+----------------+----------------+----------------+-------------+-------------+-------------+-------------+-------------+
+
+
+
+
+
